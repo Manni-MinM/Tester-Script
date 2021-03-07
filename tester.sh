@@ -87,7 +87,8 @@ do
 		userOutput=`./executableUserCPP < input.txt`
 	fi
 	# Break condition
-	if [ "$validOutput" != "$userOutput" ]
+	diff --strip-trailing-cr <(echo "$validOutput") <(echo "$userOutput")
+	if [ $? -ne 0 ]
 	then
 		flag=0
 		echo "### Different Output On Test $i ###"
