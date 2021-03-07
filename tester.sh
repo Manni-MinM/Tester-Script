@@ -9,6 +9,20 @@ userCode=$2
 checkerCode=$3
 testCount=$4
 
+# Create new file
+if [ -f "testcase.txt" ]
+then
+	rm testcase.txt
+fi
+touch testcase.txt
+
+# Check for error
+if [ $# -ne 4 ]
+then
+	echo "run : ./checker.sh valid.* user.* checker.* numberOfTestcases"
+	exit
+fi
+
 # Compile the code
 if [ ${validCode: -5} == ".java" ]
 then
@@ -46,6 +60,7 @@ for ((i=1 ; i<=testCount ; i++))
 do
 	# Create testcase using checker
 	python3 $checkerCode $i
+	cat input.txt >> testcase.txt
 	# First file
 	if [ ${validCode: -3} == ".py" ]
 	then
@@ -100,6 +115,8 @@ if [ $flag -eq 1 ]
 then 
 	echo "### Passed Testing ###"
 fi
+
+echo "Added All Testcases to testcase.txt"
 
 if [ ${validCode: -2} == ".c" ]
 then
