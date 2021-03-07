@@ -91,6 +91,8 @@ do
 	then
 		flag=0
 		echo "### Different Output On Test $i ###"
+		echo "Valid Output : $validOutput"
+		echo "User Output  : $userOutput"
 		break
 	fi
 done
