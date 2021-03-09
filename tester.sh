@@ -9,12 +9,18 @@ userCode=$2
 checkerCode=$3
 testCount=$4
 
-# Create new file
+# Create new files
 if [ -f "testcase.txt" ]
 then
 	rm testcase.txt
 fi
 touch testcase.txt
+
+if [ -f "test_out.txt" ]
+then
+        rm test_out.txt
+fi
+touch test_out.txt
 
 # Check for error
 if [ $# -ne 4 ]
@@ -101,6 +107,8 @@ do
 	then
 		userOutput=`./executableUserCPP < input.txt`
 	fi
+	# Add output to file
+	echo "$validOutput"  | tee -a test_out.txt > /dev/null
 	# Break condition
 	diff --strip-trailing-cr <(echo "$validOutput") <(echo "$userOutput")
 	if [ $? -ne 0 ]
@@ -117,6 +125,7 @@ then
 fi
 
 echo "Added All Testcases to testcase.txt"
+echo "Added Output to test_out.txt"
 
 if [ ${validCode: -2} == ".c" ]
 then
